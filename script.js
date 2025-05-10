@@ -274,15 +274,15 @@ function closeChatModal(){
 // ─────────────────────────────────────────────────────────────────────────────
 // 6) INITIALIZATION
 // ─────────────────────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded',()=>{
+document.addEventListener('DOMContentLoaded', ()=>{
   fetchLiveNow();
   fetchWeeklySchedule();
   fetchNowPlayingArchive();
   loadArchives();
-  setInterval(fetchLiveNow,30000);
-  setInterval(fetchNowPlayingArchive,30000);
+  setInterval(fetchLiveNow, 30000);
+  setInterval(fetchNowPlayingArchive, 30000);
 
-  if(isMobile) {
+  if (isMobile) {
     // remove Mixcloud section entirely on mobile
     document.querySelector('.mixcloud')?.remove();
   } else {
@@ -291,15 +291,15 @@ document.addEventListener('DOMContentLoaded',()=>{
       ifr.src = ifr.src || ifr.dataset.src;
     });
     shuffleIframesDaily();
-    const s=document.createElement('script');
-    s.src='https://widget.mixcloud.com/widget.js';
-    s.async=true;
+    const s = document.createElement('script');
+    s.src = 'https://widget.mixcloud.com/widget.js';
+    s.async = true;
     document.body.appendChild(s);
   }
 
-  document.getElementById('popOutBtn')?.addEventListener('click',()=>{
-    const src=document.getElementById('inlinePlayer').src;
-    const w=window.open('','CCRPlayer','width=400,height=200,resizable=yes');
+  document.getElementById('popOutBtn')?.addEventListener('click', ()=>{
+    const src = document.getElementById('inlinePlayer').src;
+    const w = window.open('', 'CCRPlayer', 'width=400,height=200,resizable=yes');
     w.document.write(`<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cutters Choice Player</title><style>body{margin:0;background:#111;display:flex;align-items:center;justify-content:center;height:100vh;}iframe{width:100%;height:180px;border:none;border-radius:4px;}</style></head><body><iframe src="${src}" allow="autoplay"></iframe></body></html>`);
     w.document.close();
   });
@@ -307,9 +307,43 @@ document.addEventListener('DOMContentLoaded',()=>{
   const ul = document.querySelector('.rc-user-list');
   if (ul) {
     new MutationObserver(()=> {
-      Array.from(ul.children).forEach(li=> {
+      Array.from(ul.children).forEach(li => {
         if (!li.textContent.trim()) li.remove();
       });
     }).observe(ul, { childList: true });
   }
-});
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Banner GIF sequence: original twice, new GIF twice, then loop
+  ;(function(){
+    const rightEl = document.querySelector('.header-gif-right');
+    const leftEl  = document.querySelector('.header-gif-left');
+    if (!rightEl || !leftEl) return;
+
+    let iterCount = 0;
+    const origRightBg = getComputedStyle(rightEl).backgroundImage;
+    const origLeftBg  = getComputedStyle(leftEl).backgroundImage;
+
+    // Update this path to wherever you host your new GIF:
+    const newGifUrl = '/Untitled%20design(8).gif';
+    const newBg = `url('${newGifUrl}') no-repeat center center`;
+
+    function onAnimIter() {
+      iterCount++;
+      if (iterCount === 2) {
+        // swap in new GIF after two cycles
+        rightEl.style.backgroundImage = newBg;
+        leftEl.style.backgroundImage  = newBg;
+      } else if (iterCount === 4) {
+        // revert to originals and reset
+        rightEl.style.backgroundImage = origRightBg;
+        leftEl.style.backgroundImage  = origLeftBg;
+        iterCount = 0;
+      }
+    }
+
+    rightEl.addEventListener('animationiteration', onAnimIter);
+    leftEl.addEventListener('animationiteration',  onAnimIter);
+  })();
+
+});  // end DOMContentLoaded
