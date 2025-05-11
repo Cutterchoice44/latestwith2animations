@@ -14,19 +14,9 @@
 
   /* ─── Adjustable GIF Settings ─── */
   --gif-height: 270px;     /* Change this to adjust height */
-  --gif-width: 10%;        /* Change this to adjust width */
+  --gif-width: 12%;        /* Change this to adjust width */
   --gif-speed: 12s;        /* Change this to adjust speed */
   --gif-opacity: 1.6;      /* Change this to adjust opacity */
-
-  /* ─── Per-GIF individual controls ─── */
-  /* Right→Left GIF */
-  --gif-right-width:  var(--gif-width);
-  --gif-right-height: var(--gif-height);
-  --gif-right-speed:  var(--gif-speed);
-  /* Left→Right GIF */
-  --gif-left-width:   var(--gif-width);
-  --gif-left-height:  var(--gif-height);
-  --gif-left-speed:   var(--gif-speed);
 }
 
 html, body {
@@ -54,13 +44,13 @@ html, body {
   position: absolute;
   top: 0;
   left: 50%; /* Start fully off-screen right */
-  width:  var(--gif-right-width);
-  height: var(--gif-right-height);
+  height: var(--gif-height);
+  width: var(--gif-width);
   opacity: var(--gif-opacity);
   z-index: 0;
   background: url('https://cutterschoiceradio.com/Untitled%20design(4).gif') no-repeat center center;
   background-size: cover;
-  animation: slideRightToLeft var(--gif-right-speed) linear infinite;
+ animation: slideRightToLeft var(--gif-speed) linear infinite;
 }
 
 /* SECOND GIF (LEFT TO RIGHT) */
@@ -68,25 +58,33 @@ html, body {
   position: absolute;
   top: 0;
   right: 50%; /* Start fully off-screen left */
-  width:  var(--gif-left-width);
-  height: var(--gif-left-height);
+  height: var(--gif-height);
+  width: var(--gif-width);
   opacity: var(--gif-opacity);
   z-index: 0;
-  background: url('https://cutterschoiceradio.com/Untitled%20design(8).gif') no-repeat center center;
+  background: url('https://cutterschoiceradio.com/Untitled%20design(5).gif') no-repeat center center;
   background-size: cover;
-  animation: slideLeftToRight var(--gif-left-speed) linear infinite;
+animation: slideLeftToRight var(--gif-speed) linear infinite;
 }
 
 /* ─── ANIMATIONS ───────────────────────────────────────────────────────────── */
 @keyframes slideRightToLeft {
-  0% { transform: translateX(100vw); }
-  100% { transform: translateX(-100vw); }
-}
-@keyframes slideLeftToRight {
-  0% { transform: translateX(-100vw); }
-  100% { transform: translateX(100vw); }
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-100vw);
+  }
 }
 
+@keyframes slideLeftToRight {
+  0% {
+    transform: translateX(-100vw);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
 header::before {
   content: "";
   position: absolute;
@@ -104,7 +102,7 @@ header .title {
 header .logo {
   height: 180px;
   margin-bottom: 0.3rem;
-  margin-left: 0.7rem;
+    margin-left: 0.7rem; 
 }
 
 header .title {
@@ -131,6 +129,7 @@ header .title .tagline {
   gap: 1rem;
   padding: 0.6rem;
 }
+
 @media (min-width: 600px) {
   .grid-container {
     grid-template-columns: 1fr 1.5fr;
@@ -144,16 +143,32 @@ header .title .tagline {
 /* ─── HEADER TITLE ───────────────────────────────────────── */
 header .title h1 {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 2rem;
+  font-size: 2rem;  /* keep your existing sizing */
   margin: 0;
 }
+
 @media (min-width: 900px) {
-  header .title h1 { font-size: 8rem; }
-  header .title .tagline { font-size: 2.45rem; }
-  .grid-container { grid-template-columns: 1fr 1.5fr 1fr 1fr; }
-  .chat iframe { height: 700px; }
-  #now-art { max-width: 600px; }
-  header .logo { height: 180px !important; }
+  header .title h1 {
+    /* desktop size */
+    font-size: 8rem;
+  }
+  
+  header .title .tagline {
+    font-size: 2.45rem;
+  }
+  .grid-container {
+    grid-template-columns: 1fr 1.5fr 1fr 1fr;
+  }
+  .chat iframe {
+    height: 700px;
+  }
+  #now-art {
+    max-width: 600px;
+  }
+  /* Desktop override: further boost if needed */
+  header .logo {
+    height: 180px !important;  /* keep 50% larger */
+  }
 }
 /* ─── SECTIONS ────────────────────────────────────────────────────────────── */
 section {
@@ -181,7 +196,7 @@ section h2 {
 .live-player {
   background: #000;
   border: 2px solid var(--brand-teal);
-  border-radius: 6px;
+  border-radius
   padding: 0.5rem;
   text-align: center;
 }
@@ -666,3 +681,5 @@ section h2::after {
 
 
 
+
+  
